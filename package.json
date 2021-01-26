@@ -1,0 +1,25 @@
+{
+  "name": "quote-book-server",
+  "version": "1.0.0",
+  "description": "Node.js + Express + MongoDB Server for Quote Book.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhavyakaria/quote-book-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhavyakaria/quote-book-server/issues"
+  },
+  "homepage": "https://github.com/bhavyakaria/quote-book-server#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
