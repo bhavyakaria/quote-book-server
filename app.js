@@ -25,6 +25,7 @@ app.use(session({
 // Routes
 app.use('/', require('./routes/index'));
 app.use("/v1/auth", require("./routes/auth"));
+app.use("/v1", require("./routes/book"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Server started on ${PORT}`));

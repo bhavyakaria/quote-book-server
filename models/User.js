@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  books: {
+    type: Array,
+    required: false
+  },
   googleToken: {
     type: String,
     required: true
