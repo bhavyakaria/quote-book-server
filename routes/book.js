@@ -54,7 +54,9 @@ router.post('/books', async (req, res) => {
 });
 
 router.get('/books', async (req, res) => {
-  const { userId } = req.body;
+  const userId = req.query.userId;
+
+  console.log(req.query.userId);
 
   const user = await User.findById(userId);
   const books = user["books"];
