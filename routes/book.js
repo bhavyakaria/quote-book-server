@@ -12,51 +12,55 @@ const router = express.Router();
 router.post('/books', async (req, res) => {
   
   try {
-    const { userId, booksList } = req.body;
-
-    console.log(userId, booksList);
+    const userId = req.body.userId;
+    const booksList = req.body.bookList;
 
     const user = await User.findById(userId);
 
     booksList.forEach( async (book) => {
 
       // create new book
-      const newBook = await new Book({
-        userId: userId,
-        title: book.title
-      }).save();
+      let newBook = await Book.findOne({ title: book.title });
+
+      if (!newBook) {
+        newBook = await new Book({
+          userId: userId,
+          title: book.title
+        }).save();
+        user.books.push(newBook["id"]);
+        await user.save();
+      }
 
       if (newBook) {
 
         // save notes
         book.notes.forEach( async (note) => {
           const bookId = newBook["id"];
-          const newNote = await new Note({
-            userId,
-            bookId,
-            note
-          }).save();
 
-          const updateBook = await Book.findById(bookId);
-          updateBook.notes.push(newNote);
-          updateBook.save();
+          let newNote = await Note.findOne({ note: note, bookId: bookId });
+
+          if (!newNote) {
+            newNote = await new Note({
+              userId,
+              bookId,
+              note
+            }).save();
+            const updateBook = await Book.findById(bookId);
+            updateBook.notes.push(newNote.id);
+            updateBook.save();
+          }
         });
-        user.books.push(newBook["id"]);
-        // save to user
-        await user.save();
       }
     });
-    return res.status(201).json({ message: "Data Saved Successfully" });
+    return res.status(201).json({ status: "SUCCESS", message: "Data Saved Successfully" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal Server Error " });
+    return res.status(500).json({ status: "FAILED", message: "Internal Server Error" });
   }
 });
 
 router.get('/books', async (req, res) => {
   const userId = req.query.userId;
-
-  console.log(req.query.userId);
 
   const user = await User.findById(userId);
   const books = user["books"];
