@@ -67,21 +67,21 @@ router.get('/books', async (req, res) => {
 
   const booksList = [];
 
-  // for (const bookId of books) {
-  //   const bookObj = await Book.findById(bookId);
-  //   const noteIds = bookObj["notes"];
+  for (const bookId of books) {
+    const bookObj = await Book.findById(bookId);
+    const noteIds = bookObj["notes"];
 
-  //   const newObj = {
-  //     title: bookObj["title"],
-  //     notes: []
-  //   };
+    const newObj = {
+      title: bookObj["title"],
+      notes: []
+    };
 
-  //   for (const nodeId of noteIds) {
-  //     const note = await Note.findById(nodeId);
-  //     newObj["notes"].push(note.note);
-  //   }
-  //   booksList.push(newObj);
-  // }
+    for (const nodeId of noteIds) {
+      const note = await Note.findById(nodeId);
+      newObj["notes"].push(note.note);
+    }
+    booksList.push(newObj);
+  }
   return res.status(200).json({ books: booksList});
 });
 
