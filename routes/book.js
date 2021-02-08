@@ -76,10 +76,10 @@ router.get('/books', async (req, res) => {
       notes: []
     };
 
-    for (const nodeId of noteIds) {
-      const note = await Note.findById(nodeId);
-      newObj["notes"].push(note.note);
-    }
+    // for (const nodeId of noteIds) {
+    //   const note = await Note.findById(nodeId);
+    //   newObj["notes"].push(note.note);
+    // }
     booksList.push(newObj);
   }
   return res.status(200).json({ books: booksList});
